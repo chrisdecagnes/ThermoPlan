@@ -1,0 +1,42 @@
+{
+  "type": "enum",
+  "title": {
+    "en": "Thermostat mode",
+    "fr": "Mode du thermostat",
+    "nl": "Thermostaatmodus",
+    "de": "Thermostatmodus"
+  },
+  "getable": true,
+  "setable": true,
+  "uiComponent": "picker",
+  "icon": "/assets/override.svg",
+  "values": [
+    {
+      "id": "0",
+      "title": {
+        "en": "Schedule (automatic)",
+        "fr": "Programme (automatique)",
+        "nl": "Schema (automatisch)",
+        "de": "Zeitplan (automatisch)"
+      }
+    },
+    {
+      "id": "6",
+      "title": {
+        "en": "Manual until midnight",
+        "fr": "Manuel jusqu’à minuit",
+        "nl": "Handmatig tot middernacht",
+        "de": "Manuell bis Mitternacht"
+      }
+    },
+    {
+      "id": "7",
+      "title": {
+        "en": "Fully manual",
+        "fr": "Entièrement manuel",
+        "nl": "Volledig handmatig",
+        "de": "Vollständig manuell"
+      }
+    }
+  ]
+}

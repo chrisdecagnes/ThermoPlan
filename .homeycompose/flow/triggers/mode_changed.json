@@ -1,0 +1,26 @@
+{
+  "title": {
+    "en": "The mode changed",
+    "fr": "Le mode a changé",
+    "nl": "De modus is gewijzigd",
+    "de": "Der Modus hat sich geändert"
+  },
+  "tokens": [
+    {
+      "name": "mode",
+      "type": "string",
+      "title": {
+        "en": "Mode",
+        "fr": "Mode",
+        "nl": "Modus",
+        "de": "Modus"
+      },
+      "example": {
+        "en": "Automatic",
+        "fr": "Automatique",
+        "nl": "Automatisch",
+        "de": "Automatisch"
+      }
+    }
+  ]
+}

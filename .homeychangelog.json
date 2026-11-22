@@ -1,0 +1,74 @@
+{
+  "2.12.1": {
+    "en": "Widget: fixed a possible blank widget on some Homey versions (height adjustment). Day letters of the time slots now follow the Homey language.",
+    "fr": "Widget : correction d’un widget pouvant rester vide sur certaines versions de Homey (ajustement de la hauteur). Les initiales des jours des plages suivent la langue de Homey.",
+    "nl": "Widget: mogelijk leeg widget op sommige Homey-versies verholpen (hoogteaanpassing). De dagletters van de tijdvakken volgen nu de taal van Homey.",
+    "de": "Widget: Behoben, dass das Widget auf manchen Homey-Versionen leer bleiben konnte (Höhenanpassung). Die Tagesbuchstaben der Zeitfenster folgen jetzt der Homey-Sprache."
+  },
+  "2.12.0": {
+    "en": "Dutch and German translations (settings page, widget, Flow cards, store description). Decimal comma in French, Dutch and German.",
+    "fr": "Traductions néerlandaise et allemande (page de réglages, widget, cartes Flow, description du store). Virgule décimale en français, néerlandais et allemand.",
+    "nl": "Nederlandse en Duitse vertalingen (instellingenpagina, widget, Flow-kaarten, beschrijving in de store). Decimale komma in het Frans, Nederlands en Duits.",
+    "de": "Niederländische und deutsche Übersetzungen (Einstellungsseite, Widget, Flow-Karten, Store-Beschreibung). Dezimalkomma auf Französisch, Niederländisch und Deutsch."
+  },
+  "2.11.0": {
+    "en": "Dashboard widget: each schedule now shows a compact “Last 24 hours” chart (measured temperature, set point, outdoor), can be turned off in the widget settings.",
+    "fr": "Widget du tableau de bord : chaque programme affiche maintenant un mini-graphique « Dernières 24 heures » (température mesurée, consigne, extérieur), désactivable dans les réglages du widget."
+  },
+  "2.10.0": {
+    "en": "Overview: new “Last 24 hours” chart per schedule with the measured temperature, the set point and the outdoor temperature (one point every 10 minutes).",
+    "fr": "Aperçu : nouveau graphique « Dernières 24 heures » par programme avec la température mesurée, la consigne et la température extérieure (un point toutes les 10 minutes)."
+  },
+  "2.9.0": {
+    "en": "Fans driven by room temperature: a fan schedule can use a room sensor to run only above a chosen threshold (with margin). New Flow trigger \"The average outdoor temperature changed\".",
+    "fr": "Ventilation selon la température de la pièce : un programme de ventilation peut utiliser une sonde pour ne tourner qu'au-dessus d'un seuil choisi (avec marge). Nouveau déclencheur Flow « La température extérieure moyenne a changé »."
+  },
+  "2.8.1": {
+    "en": "Open window: choose whether a door or window open in one of the schedule's zones stops the whole schedule, or only the devices of that room.",
+    "fr": "Fenêtre ouverte : choix entre couper tout le programme quand une porte ou une fenêtre est ouverte dans l'une de ses zones, ou seulement les appareils de la pièce concernée."
+  },
+  "2.8.0": {
+    "en": "Nobody home: every schedule pauses when all Homey users are away (after a chosen delay) and resumes when someone is back. Heating off or eco, air conditioning and fans off. Flow cards to force or follow presence.",
+    "fr": "Personne à la maison : toutes les programmations se mettent en pause quand tous les utilisateurs Homey sont absents (après un délai choisi) et reprennent au retour. Chauffage arrêté ou réduit, clim et ventilation arrêtées. Cartes Flow pour forcer ou suivre la présence."
+  },
+  "2.7.0": {
+    "en": "Fan schedules: speed buttons (Off, 1…N, Auto, Quiet) read from the fan itself, or a % slider for dimmable fans.",
+    "fr": "Programmes de ventilation : boutons de vitesse (Arrêt, 1…N, Auto, Silence) lus sur le ventilateur, ou curseur en % pour les ventilateurs à variateur."
+  },
+  "2.6.0": {
+    "en": "Air conditioner fan per time slot: unchanged, Auto, Quiet or a fixed level (1 to 5 on Daikin units), applied with the temperature.",
+    "fr": "Ventilation de la clim par plage horaire : inchangée, Auto, Silence ou un niveau fixe (1 à 5 sur les Daikin), appliquée avec la température."
+  },
+  "2.5.0": {
+    "en": "Room sensor per schedule: show the real room temperature, or let ThermoPlan regulate (heating / cooling on or standby around the set point, with an adjustable margin).",
+    "fr": "Sonde de la pièce par programme : affichage de la vraie température de la pièce, ou régulation par ThermoPlan (chauffage / climatisation en marche ou en attente autour de la consigne, avec une marge réglable)."
+  },
+  "2.4.1": {
+    "en": "On/off switches and labels now display correctly on Homey.",
+    "fr": "Les interrupteurs et les libellés s'affichent maintenant correctement sur Homey."
+  },
+  "2.4.0": {
+    "en": "Open window: heating or air conditioning stops when a window of the zone stays open for a chosen delay (sensors of the device's zone or chosen ones), and resumes its schedule when closed. Optional notification.",
+    "fr": "Fenêtre ouverte : le chauffage ou la climatisation s'arrête quand une fenêtre de la zone reste ouverte plus longtemps que le délai choisi (capteurs de la zone de l'appareil ou capteurs choisis), puis reprend son programme à la fermeture. Notification au choix."
+  },
+  "2.3.1": {
+    "en": "Settings page redesigned: the look no longer changes on Homey (styles isolated), new overview with mode and season buttons and schedule cards showing today's time slots, consistent styling on every tab.",
+    "fr": "Page de réglages revue : l'apparence ne change plus une fois sur Homey (styles isolés), nouvel aperçu avec boutons de mode et de saison et cartes de programmes montrant les plages du jour, style homogène sur tous les onglets."
+  },
+  "2.3.0": {
+    "en": "New dashboard widget: mode and season at a glance, each schedule with its current value, today's time slots, an on/off switch and Test / Back to schedule buttons. Requires Homey Pro (2023) with Homey ≥ 12.3.",
+    "fr": "Nouveau widget de tableau de bord : mode et saison en un coup d'œil, chaque programme avec sa valeur actuelle, ses plages du jour, un interrupteur et les boutons Tester / Revenir au programme. Nécessite un Homey Pro (2023) en version 12.3 ou plus."
+  },
+  "2.2.0": {
+    "en": "New schedule editor: weekly overview chart, time slots with day buttons (Mon–Fri, weekend, every day), a value outside the slots, +/- temperature buttons, Test buttons to try a schedule right away, validity period chips. Existing schedules are converted automatically.",
+    "fr": "Nouvel éditeur de programme : graphique de la semaine, plages horaires avec boutons de jours (Lun–Ven, week-end, tous les jours), valeur hors plages, boutons +/− pour la température, boutons Tester pour essayer un programme tout de suite, période de validité. Les programmes existants sont convertis automatiquement."
+  },
+  "2.1.0": {
+    "en": "Season by outdoor temperature (any temperature sensor, including the outdoor temperature reported by an air conditioner), with summer / mid-season / winter thresholds. Air conditioners using brand-specific mode names (e.g. Daikin 'cooling'/'heating') are now switched to the right mode. New flow token: average outdoor temperature.",
+    "fr": "Saison selon la température extérieure (toute sonde, y compris la température extérieure remontée par un climatiseur), avec seuils été / mi-saison / hiver. Les climatiseurs aux noms de modes propres à la marque (ex. Daikin « cooling » / « heating ») passent maintenant dans le bon mode. Nouveau jeton Flow : température extérieure moyenne."
+  },
+  "2.0.0": {
+    "en": "Complete rewrite for Homey SDK 3: air conditioning and fan schedules, summer/winter seasons, French translation.",
+    "fr": "Réécriture complète pour le SDK 3 de Homey : programmes de climatisation et de ventilation, saisons été/hiver, traduction française."
+  }
+}

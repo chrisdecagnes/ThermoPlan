@@ -1,0 +1,32 @@
+{
+  "title": {
+    "en": "Apply a schedule",
+    "fr": "Appliquer un programme",
+    "nl": "Een schema toepassen",
+    "de": "Einen Zeitplan anwenden"
+  },
+  "titleFormatted": {
+    "en": "Apply schedule [[plan]]",
+    "fr": "Appliquer le programme [[plan]]",
+    "nl": "Schema [[plan]] toepassen",
+    "de": "Zeitplan [[plan]] anwenden"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "plan",
+      "title": {
+        "en": "Schedule",
+        "fr": "Programme",
+        "nl": "Schema",
+        "de": "Zeitplan"
+      },
+      "placeholder": {
+        "en": "Search for a schedule...",
+        "fr": "Rechercher un programme...",
+        "nl": "Zoek een schema...",
+        "de": "Zeitplan suchen..."
+      }
+    }
+  ]
+}

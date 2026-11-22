@@ -1,0 +1,14 @@
+{
+  "title": {
+    "en": "Apply all active schedules",
+    "fr": "Appliquer tous les programmes actifs",
+    "nl": "Alle actieve schema's toepassen",
+    "de": "Alle aktiven Zeitpläne anwenden"
+  },
+  "hint": {
+    "en": "Re-sends the current set points to all devices.",
+    "fr": "Renvoie les consignes en cours à tous les appareils.",
+    "nl": "Stuurt de huidige doeltemperaturen opnieuw naar alle apparaten.",
+    "de": "Sendet die aktuellen Solltemperaturen erneut an alle Geräte."
+  }
+}

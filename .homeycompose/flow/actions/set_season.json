@@ -1,0 +1,79 @@
+{
+  "title": {
+    "en": "Set the season",
+    "fr": "Changer la saison",
+    "nl": "Seizoen instellen",
+    "de": "Jahreszeit einstellen"
+  },
+  "titleFormatted": {
+    "en": "Set the season to [[season]]",
+    "fr": "Régler la saison sur [[season]]",
+    "nl": "Seizoen instellen op [[season]]",
+    "de": "Jahreszeit auf [[season]] setzen"
+  },
+  "hint": {
+    "en": "Winter runs the heating schedules, summer the cooling and fan schedules.",
+    "fr": "L’hiver active les programmes de chauffage, l’été ceux de climatisation et de ventilation.",
+    "nl": "De winter voert de verwarmingsschema's uit, de zomer de koel- en ventilatieschema's.",
+    "de": "Im Winter laufen die Heizzeitpläne, im Sommer die Kühl- und Lüftungszeitpläne."
+  },
+  "args": [
+    {
+      "type": "dropdown",
+      "name": "season",
+      "title": {
+        "en": "Season",
+        "fr": "Saison",
+        "nl": "Seizoen",
+        "de": "Jahreszeit"
+      },
+      "values": [
+        {
+          "id": "auto",
+          "label": {
+            "en": "Automatic (by date)",
+            "fr": "Automatique (selon les dates)",
+            "nl": "Automatisch (op datum)",
+            "de": "Automatisch (nach Datum)"
+          }
+        },
+        {
+          "id": "outdoor",
+          "label": {
+            "en": "By outdoor temperature",
+            "fr": "Selon la température extérieure",
+            "nl": "Volgens buitentemperatuur",
+            "de": "Nach Außentemperatur"
+          }
+        },
+        {
+          "id": "heating",
+          "label": {
+            "en": "Winter (heating)",
+            "fr": "Hiver (chauffage)",
+            "nl": "Winter (verwarming)",
+            "de": "Winter (Heizung)"
+          }
+        },
+        {
+          "id": "cooling",
+          "label": {
+            "en": "Summer (cooling & fans)",
+            "fr": "Été (climatisation et ventilation)",
+            "nl": "Zomer (koeling en ventilatie)",
+            "de": "Sommer (Kühlung und Ventilatoren)"
+          }
+        },
+        {
+          "id": "off",
+          "label": {
+            "en": "Mid-season (nothing controlled)",
+            "fr": "Mi-saison (aucun pilotage)",
+            "nl": "Tussenseizoen (niets aangestuurd)",
+            "de": "Übergangszeit (keine Steuerung)"
+          }
+        }
+      ]
+    }
+  ]
+}

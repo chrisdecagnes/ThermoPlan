@@ -1,0 +1,38 @@
+{
+  "title": {
+    "en": "The average outdoor temperature changed",
+    "fr": "La température extérieure moyenne a changé",
+    "nl": "De gemiddelde buitentemperatuur is gewijzigd",
+    "de": "Die durchschnittliche Außentemperatur hat sich geändert"
+  },
+  "hint": {
+    "en": "Average over the period set in ThermoPlan, rounded to 0.5 °C. Requires an outdoor sensor.",
+    "fr": "Moyenne sur la durée réglée dans ThermoPlan, arrondie à 0,5 °C. Nécessite une sonde extérieure.",
+    "nl": "Gemiddelde over de in ThermoPlan ingestelde periode, afgerond op 0,5 °C. Vereist een buitensensor.",
+    "de": "Durchschnitt über den in ThermoPlan eingestellten Zeitraum, auf 0,5 °C gerundet. Erfordert einen Außensensor."
+  },
+  "tokens": [
+    {
+      "name": "average",
+      "type": "number",
+      "title": {
+        "en": "Average",
+        "fr": "Moyenne",
+        "nl": "Gemiddelde",
+        "de": "Durchschnitt"
+      },
+      "example": 18.5
+    },
+    {
+      "name": "previous",
+      "type": "number",
+      "title": {
+        "en": "Previous average",
+        "fr": "Moyenne précédente",
+        "nl": "Vorig gemiddelde",
+        "de": "Vorheriger Durchschnitt"
+      },
+      "example": 18
+    }
+  ]
+}

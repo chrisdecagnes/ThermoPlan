@@ -1,0 +1,61 @@
+{
+  "title": {
+    "en": "Set the away mode",
+    "fr": "Régler l’absence",
+    "nl": "Afwezigheidsmodus instellen",
+    "de": "Abwesenheitsmodus einstellen"
+  },
+  "titleFormatted": {
+    "en": "Away mode: [[state]]",
+    "fr": "Absence : [[state]]",
+    "nl": "Afwezigheidsmodus: [[state]]",
+    "de": "Abwesenheitsmodus: [[state]]"
+  },
+  "hint": {
+    "en": "Nobody home pauses every schedule. “Automatic” follows the presence of Homey users.",
+    "fr": "Personne à la maison met toutes les programmations en pause. « Automatique » suit la présence des utilisateurs Homey.",
+    "nl": "Niemand thuis pauzeert elk schema. „Automatisch” volgt de aanwezigheid van Homey-gebruikers.",
+    "de": "Niemand zu Hause pausiert jeden Zeitplan. „Automatisch“ folgt der Anwesenheit der Homey-Benutzer."
+  },
+  "args": [
+    {
+      "type": "dropdown",
+      "name": "state",
+      "title": {
+        "en": "State",
+        "fr": "État",
+        "nl": "Status",
+        "de": "Zustand"
+      },
+      "values": [
+        {
+          "id": "auto",
+          "label": {
+            "en": "Automatic (Homey presence)",
+            "fr": "Automatique (présence Homey)",
+            "nl": "Automatisch (Homey-aanwezigheid)",
+            "de": "Automatisch (Homey-Anwesenheit)"
+          }
+        },
+        {
+          "id": "away",
+          "label": {
+            "en": "Nobody home (pause)",
+            "fr": "Personne à la maison (pause)",
+            "nl": "Niemand thuis (pauze)",
+            "de": "Niemand zu Hause (Pause)"
+          }
+        },
+        {
+          "id": "home",
+          "label": {
+            "en": "Someone is home",
+            "fr": "Quelqu’un est à la maison",
+            "nl": "Iemand is thuis",
+            "de": "Jemand ist zu Hause"
+          }
+        }
+      ]
+    }
+  ]
+}

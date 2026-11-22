@@ -1,0 +1,8 @@
+node_modules/
+package-lock.json
+env.json
+.homeybuild/
+bench/out/
+*.zip
+.DS_Store
+Thumbs.db

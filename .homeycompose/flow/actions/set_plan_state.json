@@ -1,0 +1,62 @@
+{
+  "title": {
+    "en": "Enable or disable a schedule",
+    "fr": "Activer ou désactiver un programme",
+    "nl": "Een schema in- of uitschakelen",
+    "de": "Einen Zeitplan aktivieren oder deaktivieren"
+  },
+  "titleFormatted": {
+    "en": "Set schedule [[plan]] to [[state]]",
+    "fr": "Programme [[plan]] [[state]]",
+    "nl": "Schema [[plan]] op [[state]] zetten",
+    "de": "Zeitplan [[plan]] auf [[state]] setzen"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "plan",
+      "title": {
+        "en": "Schedule",
+        "fr": "Programme",
+        "nl": "Schema",
+        "de": "Zeitplan"
+      },
+      "placeholder": {
+        "en": "Search for a schedule...",
+        "fr": "Rechercher un programme...",
+        "nl": "Zoek een schema...",
+        "de": "Zeitplan suchen..."
+      }
+    },
+    {
+      "type": "dropdown",
+      "name": "state",
+      "title": {
+        "en": "State",
+        "fr": "État",
+        "nl": "Status",
+        "de": "Zustand"
+      },
+      "values": [
+        {
+          "id": "true",
+          "label": {
+            "en": "enabled",
+            "fr": "activé",
+            "nl": "ingeschakeld",
+            "de": "aktiviert"
+          }
+        },
+        {
+          "id": "false",
+          "label": {
+            "en": "disabled",
+            "fr": "désactivé",
+            "nl": "uitgeschakeld",
+            "de": "deaktiviert"
+          }
+        }
+      ]
+    }
+  ]
+}

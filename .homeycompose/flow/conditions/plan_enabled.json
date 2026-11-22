@@ -1,0 +1,32 @@
+{
+  "title": {
+    "en": "A schedule !{{is|is not}} enabled",
+    "fr": "Un programme !{{est|n’est pas}} activé",
+    "nl": "Een schema !{{is|is niet}} ingeschakeld",
+    "de": "Ein Zeitplan !{{ist|ist nicht}} aktiviert"
+  },
+  "titleFormatted": {
+    "en": "Schedule [[plan]] !{{is|is not}} enabled",
+    "fr": "Le programme [[plan]] !{{est|n’est pas}} activé",
+    "nl": "Schema [[plan]] !{{is|is niet}} ingeschakeld",
+    "de": "Zeitplan [[plan]] !{{ist|ist nicht}} aktiviert"
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "plan",
+      "title": {
+        "en": "Schedule",
+        "fr": "Programme",
+        "nl": "Schema",
+        "de": "Zeitplan"
+      },
+      "placeholder": {
+        "en": "Search for a schedule...",
+        "fr": "Rechercher un programme...",
+        "nl": "Zoek een schema...",
+        "de": "Zeitplan suchen..."
+      }
+    }
+  ]
+}

@@ -1,0 +1,394 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --heating: #E8590C; --cooling: #1C7ED6; --fan: #0CA678; --ok: #2F855A; --warn: #D97706;
+      --bg: #FFFFFF; --soft: #F1F3F5; --text: #1F2328; --muted: #6B7280; --border: #E2E5E9;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #1F2226; --soft: #2A2E33; --text: #E8EAED; --muted: #9AA0A6; --border: #33373D; }
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.35 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    #root { padding: 12px; }
+    .hidden { display: none !important; }
+    .top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+    .top select { font: inherit; font-weight: 600; color: var(--text); background: var(--soft); border: none; border-radius: 999px; padding: 6px 12px; }
+    .pill { font-size: 12px; padding: 5px 10px; border-radius: 999px; background: var(--soft); color: var(--muted); white-space: nowrap; }
+    .spacer { flex: 1; }
+    .btn { font: inherit; font-size: 13px; font-weight: 600; border: none; border-radius: 999px; padding: 6px 12px; background: var(--soft); color: var(--text); cursor: pointer; }
+    .plan { border: 1px solid var(--border); border-left: 4px solid var(--c); border-radius: 12px; padding: 10px; margin-bottom: 8px; }
+    .plan.heating { --c: var(--heating); } .plan.cooling { --c: var(--cooling); } .plan.fan { --c: var(--fan); }
+    .plan.off { opacity: .6; }
+    .row { display: flex; align-items: center; gap: 8px; }
+    .icon { width: 30px; height: 30px; border-radius: 50%; background: var(--c); display: flex; align-items: center; justify-content: center; font-size: 15px; flex: none; }
+    .main { flex: 1; min-width: 0; }
+    .name { font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sub { font-size: 12px; color: var(--muted); }
+    .value { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .sw { position: relative; display: inline-block; width: 44px; height: 26px; flex: none; }
+    .sw > input { position: absolute; top: 0; left: 0; width: 100%; height: 100%; margin: 0; padding: 0; opacity: 0; z-index: 2; cursor: pointer; -webkit-appearance: none; appearance: none; }
+    .sw > i { position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: 13px; background: #C9CDD2; pointer-events: none; transition: background .15s; }
+    .sw > i::after { content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: left .15s; }
+    .sw > input:checked + i { background: var(--ok); }
+    .sw > input:checked + i::after { left: 21px; }
+    .day { position: relative; height: 12px; background: var(--soft); border-radius: 4px; margin: 9px 0 3px; }
+    .seg { position: absolute; top: 0; bottom: 0; background: var(--c); border-radius: 3px; }
+    .seg.dim { opacity: .4; }
+    .now { position: absolute; top: -3px; bottom: -3px; width: 2px; background: #E03131; }
+    .axis { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); }
+    .acts { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+    .acts .btn { padding: 5px 10px; font-size: 12px; }
+    .acts .btn.on { background: color-mix(in srgb, var(--c) 16%, var(--bg)); color: var(--c); }
+    .hint { font-size: 11px; color: var(--muted); text-align: center; margin-top: 6px; }
+    .msg { position: fixed; left: 10px; right: 10px; bottom: 10px; background: #222; color: #fff; border-radius: 8px; padding: 8px 10px; font-size: 13px; }
+    .empty { text-align: center; color: var(--muted); padding: 16px 0; }
+    svg.chart { display: block; width: 100%; height: auto; margin-top: 8px; overflow: visible; }
+    svg.chart .grid { stroke: var(--border); stroke-width: 1; }
+    svg.chart .grid.v { stroke-dasharray: 2 4; }
+    svg.chart .ylab { fill: var(--muted); font-size: 10px; text-anchor: end; }
+    svg.chart .xlab { fill: var(--muted); font-size: 10px; text-anchor: middle; }
+    svg.chart .line { fill: none; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+    svg.chart .line.meas { stroke: var(--c); }
+    svg.chart .line.set { stroke: var(--text); stroke-width: 1.3; stroke-dasharray: 4 3; opacity: .7; }
+    svg.chart .line.out { stroke: var(--muted); stroke-width: 1.3; opacity: .8; }
+    svg.chart .dot.meas { fill: var(--c); stroke: var(--bg); stroke-width: 2; }
+    svg.chart .dot.out { fill: var(--muted); }
+    .chart-empty { font-size: 11px; color: var(--muted); margin-top: 6px; }
+    .legend { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .legend i { display: inline-block; width: 14px; height: 0; vertical-align: middle; margin-right: 4px; border-top: 2px solid var(--muted); }
+    .legend .meas i { border-top-color: var(--text); }
+    .legend .set i { border-top: 2px dashed var(--text); opacity: .7; }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <div class="top" id="top">
+      <select id="mode" aria-label="Mode"></select>
+      <span class="pill" id="season"></span>
+      <span class="spacer"></span>
+      <button class="btn" id="apply"></button>
+    </div>
+    <div id="plans"></div>
+    <div class="legend hidden" id="legend"></div>
+    <div class="hint" id="hint"></div>
+  </div>
+  <div class="msg hidden" id="msg"></div>
+
+  <script>
+    (function () {
+      'use strict';
+      const ICON = { heating: '🔥', cooling: '❄️', fan: '🌀' };
+      let H = null;
+      let settings = {};
+      let data = null;
+      let history = null;
+      const SVGNS = 'http://www.w3.org/2000/svg';
+      let msgTimer = null;
+
+      const $ = (id) => document.getElementById(id);
+      const el = (tag, cls, text) => {
+        const e = document.createElement(tag);
+        if (cls) e.className = cls;
+        if (text != null) e.textContent = text;
+        return e;
+      };
+      function t(key, tokens) {
+        let s = H.__(`widget.${key}`) || key;
+        Object.entries(tokens || {}).forEach(([k, v]) => { s = s.split(`__${k}__`).join(v); });
+        return s;
+      }
+      const isFr = () => !/^en/.test(H.__('settings.locale') || 'fr-FR'); // virgule décimale (fr, nl, de)
+      const num = (n) => {
+        const s = Number.isInteger(n) ? String(n) : Number(n).toFixed(1);
+        return isFr() ? s.replace('.', ',') : s;
+      };
+      const hhmm = (m) => `${String(Math.floor((m % 1440) / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
+      function valueText(type, v) {
+        if (!v) return '–';
+        if (type === 'fan') return v.fan ? H.__(`settings.plan.ac_fan_${v.fan}`) : (v.off || !(v.fanSpeed > 0) ? H.__('settings.common.off') : `${Math.round(v.fanSpeed * 100)} %`);
+        if (v.off) return H.__('settings.common.off');
+        return `${num(v.targetTemperature)}°`;
+      }
+      function actionText(a) {
+        if (!a) return '–';
+        if (a.kind === 'temperature') return `${num(a.value)}°`;
+        if (a.kind === 'fan') return a.mode ? H.__(`settings.plan.ac_fan_${a.mode}`) : (a.speed > 0 ? `${Math.round(a.speed * 100)} %` : H.__('settings.common.off'));
+        return H.__('settings.common.off');
+      }
+      function flash(text) {
+        const m = $('msg');
+        m.textContent = text;
+        m.classList.remove('hidden');
+        clearTimeout(msgTimer);
+        msgTimer = setTimeout(() => m.classList.add('hidden'), 2500);
+      }
+      async function call(method, path, body) {
+        try {
+          return await H.api(method, path, body);
+        } catch (e) {
+          flash((e && e.message) || t('error'));
+          throw e;
+        }
+      }
+
+      const svg = (tag, attrs, text) => {
+        const e = document.createElementNS(SVGNS, tag);
+        Object.entries(attrs || {}).forEach(([k, v]) => e.setAttribute(k, v));
+        if (text != null) e.textContent = text;
+        return e;
+      };
+
+      /** Segments continus d'une série (coupée sur valeur absente ou trou > 2,5 pas). */
+      function segments(points, pick, step) {
+        const segs = [];
+        let cur = null;
+        let lastT = null;
+        points.forEach((pt) => {
+          const v = pick(pt);
+          if (typeof v !== 'number' || (lastT != null && pt.t - lastT > step * 2.5)) cur = null;
+          if (typeof v === 'number') {
+            if (!cur) { cur = []; segs.push(cur); }
+            cur.push([pt.t, v]);
+          }
+          lastT = pt.t;
+        });
+        return segs;
+      }
+
+      /** Mini-graphique des dernières 24 h d'un programme (mesurée, consigne, extérieur). */
+      function chart(p) {
+        const h = history;
+        const points = (h && h.points) || [];
+        const step = (h && h.step) || 600000;
+        const now = (h && h.now) || Date.now();
+        const start = now - 24 * 3600000;
+        const pv = (pt, i) => (pt.p && pt.p[p.id] ? pt.p[p.id][i] : null);
+        const series = [
+          { cls: 'out', segs: segments(points, (pt) => pt.o, step) },
+          { cls: 'set', segs: p.type === 'fan' ? [] : segments(points, (pt) => pv(pt, 1), step), stepped: true },
+          { cls: 'meas', segs: segments(points, (pt) => pv(pt, 0), step) },
+        ];
+        const values = [];
+        series.forEach((se) => se.segs.forEach((sg) => sg.forEach(([, v]) => values.push(v))));
+        if (!series[2].segs.length && !series[1].segs.length) return { node: el('div', 'chart-empty', t('chart_empty')), series: [] };
+        let lo = Math.floor(Math.min(...values) - 0.5);
+        let hi = Math.ceil(Math.max(...values) + 0.5);
+        if (hi - lo < 4) { const mid = (hi + lo) / 2; lo = Math.floor(mid - 2); hi = Math.ceil(mid + 2); }
+        const W = 320; const Hh = 96; const L = 26; const R = 4; const T = 4; const B = 16;
+        const x = (tt) => L + ((tt - start) / (now - start)) * (W - L - R);
+        const y = (v) => T + ((hi - v) / (hi - lo)) * (Hh - T - B);
+        const root = svg('svg', { viewBox: `0 0 ${W} ${Hh}`, class: 'chart', role: 'img', 'aria-label': t('chart_title') });
+        const gstep = [1, 2, 5, 10].find((g) => (hi - lo) / g <= 3) || 10;
+        for (let v = Math.ceil(lo / gstep) * gstep; v <= hi; v += gstep) {
+          root.appendChild(svg('line', { x1: L, x2: W - R, y1: y(v), y2: y(v), class: 'grid' }));
+          root.appendChild(svg('text', { x: L - 4, y: y(v) + 3.5, class: 'ylab' }, `${v}°`));
+        }
+        if (data && typeof data.localMinutes === 'number') {
+          const hour = Math.floor(data.localMinutes / 60);
+          let hh = hour - (hour % 6);
+          let tt = now - (data.localMinutes - hh * 60) * 60000;
+          while (tt >= start) {
+            root.appendChild(svg('line', { x1: x(tt), x2: x(tt), y1: T, y2: Hh - B, class: 'grid v' }));
+            root.appendChild(svg('text', { x: x(tt), y: Hh - 3, class: 'xlab' }, `${hh}h`));
+            tt -= 6 * 3600000;
+            hh = (hh + 18) % 24;
+          }
+        }
+        series.forEach((se) => se.segs.forEach((sg) => {
+          let d = '';
+          sg.forEach(([tt, v], i) => {
+            if (i === 0) d += `M${x(tt).toFixed(1)},${y(v).toFixed(1)}`;
+            else if (se.stepped) d += `H${x(tt).toFixed(1)}V${y(v).toFixed(1)}`;
+            else d += `L${x(tt).toFixed(1)},${y(v).toFixed(1)}`;
+          });
+          const lastPt = sg[sg.length - 1];
+          if (se.stepped) d += `H${x(Math.min(now, lastPt[0] + step)).toFixed(1)}`;
+          if (sg.length === 1 && !se.stepped) root.appendChild(svg('circle', { cx: x(lastPt[0]), cy: y(lastPt[1]), r: 2, class: `dot ${se.cls}` }));
+          else root.appendChild(svg('path', { d, class: `line ${se.cls}` }));
+        }));
+        const meas = series[2].segs[series[2].segs.length - 1];
+        if (meas) {
+          const [tt, v] = meas[meas.length - 1];
+          root.appendChild(svg('circle', { cx: x(tt), cy: y(v), r: 3.5, class: 'dot meas' }));
+        }
+        return { node: root, series: series.filter((se) => se.segs.length).map((se) => se.cls) };
+      }
+
+      function render() {
+        const d = data;
+        // en-tête : mode, saison, température extérieure
+        $('top').classList.toggle('hidden', settings.show_header === false);
+        const mode = $('mode');
+        if (!mode.options.length) {
+          [0, 1, 2, 3, 4, 5].forEach((m) => {
+            const o = el('option', null, H.__(`modes.${m}`));
+            o.value = String(m);
+            mode.appendChild(o);
+          });
+        }
+        mode.value = String(d.mode);
+        $('season').textContent = t('season', { season: H.__(`seasons.${d.season}`) })
+          + (typeof d.outdoor === 'number' ? ` · ${t('outdoor', { value: num(d.outdoor) })}` : '');
+        $('apply').textContent = t('apply');
+
+        const box = $('plans');
+        box.innerHTML = '';
+        const shown = new Set();
+        const plans = d.plans.filter((p) => settings.show_disabled !== false || p.enabled || settings.plan);
+        if (!plans.length) box.appendChild(el('div', 'empty', t('empty')));
+        plans.forEach((p) => {
+          const active = p.enabled && p.inSeason && !p.manual && !p.away;
+          const card = el('div', `plan ${p.type}${active ? '' : ' off'}`);
+
+          // ligne principale
+          const row = el('div', 'row');
+          row.appendChild(el('div', 'icon', ICON[p.type]));
+          const main = el('div', 'main');
+          main.appendChild(el('div', 'name', p.name));
+          let sub;
+          if (!p.enabled) sub = t('disabled');
+          else if (p.away) sub = H.__('settings.plan.away_card');
+          else if (p.windowStopped && p.windowStopped.length) sub = (H.__('settings.plan.window_stopped') || '').split('__names__').join(p.windowStopped.join(', '));
+          else if (!p.inSeason) sub = t('out_of_season');
+          else if (p.manual) sub = t('manual');
+          else {
+            const cur = p.today.find((r) => r.start <= d.localMinutes && d.localMinutes < r.end);
+            sub = cur ? t('now_until', { value: valueText(p.type, cur.value), time: hhmm(cur.end) })
+              : t('now', { value: valueText(p.type, p.base) });
+          }
+          if (p.room && typeof p.room.temperature === 'number' && p.enabled) {
+            sub += ` · ${(H.__('settings.plan.room_status') || '').split('__value__').join(`${num(Math.round(p.room.temperature * 10) / 10)}°`)}`;
+            if (p.room.regulation === 'idle') sub += ` · ${H.__('settings.plan.reg_idle')}`;
+          }
+          main.appendChild(el('div', 'sub', sub));
+          row.appendChild(main);
+          if (active) row.appendChild(el('div', 'value', actionText(p.action)));
+          const sw = el('input');
+          sw.type = 'checkbox';
+          sw.checked = p.enabled;
+          sw.addEventListener('change', async () => {
+            H.hapticFeedback && H.hapticFeedback();
+            try {
+              await call('PUT', `/plans/${encodeURIComponent(p.id)}/enabled`, { enabled: sw.checked });
+              await load();
+            } catch (e) { sw.checked = !sw.checked; }
+          });
+          const swWrap = el('span', 'sw');
+          swWrap.appendChild(sw);
+          swWrap.appendChild(el('i'));
+          row.appendChild(swWrap);
+          card.appendChild(row);
+
+          // plages du jour
+          if (settings.show_day !== false) {
+            const day = el('div', 'day');
+            p.today.forEach((r) => {
+              const off = p.type === 'fan' ? !(r.value.fanSpeed > 0) : !!r.value.off;
+              const seg = el('div', `seg${off ? ' dim' : ''}`);
+              seg.style.left = `${(r.start / 1440) * 100}%`;
+              seg.style.width = `${((r.end - r.start) / 1440) * 100}%`;
+              seg.title = `${hhmm(r.start)}–${hhmm(r.end)} · ${valueText(p.type, r.value)}`;
+              day.appendChild(seg);
+            });
+            const now = el('div', 'now');
+            now.style.left = `${(d.localMinutes / 1440) * 100}%`;
+            day.appendChild(now);
+            card.appendChild(day);
+            const axis = el('div', 'axis');
+            ['0h', '6h', '12h', '18h', '24h'].forEach((x) => axis.appendChild(el('span', null, x)));
+            card.appendChild(axis);
+          }
+
+          // dernières 24 h
+          if (settings.show_chart !== false && history) {
+            const c = chart(p);
+            card.appendChild(c.node);
+            c.series.forEach((cls) => shown.add(cls));
+          }
+
+          // tester / revenir au programme
+          const acts = el('div', 'acts');
+          if (p.testValue) {
+            const test = el('button', 'btn on', t('test', { value: valueText(p.type, p.testValue) }));
+            test.addEventListener('click', async () => {
+              H.hapticFeedback && H.hapticFeedback();
+              const r = await call('POST', `/plans/${encodeURIComponent(p.id)}/test`, { value: p.testValue });
+              flash(r.devices.length ? t('sent', { count: r.devices.length }) : t('no_device'));
+            });
+            acts.appendChild(test);
+          }
+          const back = el('button', 'btn', t('back'));
+          back.addEventListener('click', async () => {
+            H.hapticFeedback && H.hapticFeedback();
+            await call('POST', `/plans/${encodeURIComponent(p.id)}/apply`);
+            await load();
+          });
+          acts.appendChild(back);
+          card.appendChild(acts);
+          box.appendChild(card);
+        });
+        const legend = $('legend');
+        legend.innerHTML = '';
+        ['meas', 'set', 'out'].filter((cls) => shown.has(cls)).forEach((cls) => {
+          const s = el('span', cls);
+          s.appendChild(el('i'));
+          s.appendChild(document.createTextNode(t(`chart_${cls}`)));
+          legend.appendChild(s);
+        });
+        legend.classList.toggle('hidden', !shown.size);
+        $('hint').textContent = t('edit_hint');
+        resize();
+      }
+
+      function resize() {
+        const h = Math.ceil($('root').getBoundingClientRect().height) + 4;
+        // setHeight peut renvoyer une promesse ou rien selon la version de Homey
+        try {
+          const r = H.setHeight && H.setHeight(h);
+          if (r && typeof r.catch === 'function') r.catch(() => {});
+        } catch (e) { /* hauteur fixe */ }
+        return h;
+      }
+
+      async function load() {
+        const plan = settings.plan && settings.plan.id ? `?plan=${encodeURIComponent(settings.plan.id)}` : '';
+        const [st, hist] = await Promise.all([
+          H.api('GET', `/state${plan}`),
+          settings.show_chart !== false ? H.api('GET', `/history${plan}`).catch(() => null) : null,
+        ]);
+        data = st;
+        history = hist;
+        render();
+      }
+
+      window.onHomeyReady = async function onHomeyReady(Homey) {
+        H = Homey;
+        settings = Homey.getSettings() || {};
+        $('mode').addEventListener('change', async () => {
+          H.hapticFeedback && H.hapticFeedback();
+          await call('PUT', '/mode', { mode: Number($('mode').value) });
+          await load();
+        });
+        $('apply').addEventListener('click', async () => {
+          H.hapticFeedback && H.hapticFeedback();
+          await call('POST', '/apply');
+          flash(t('applied'));
+          await load();
+        });
+        Homey.on('thermoplan.state', () => load().catch(() => {}));
+        setInterval(() => load().catch(() => {}), 60000);
+        try {
+          await load();
+        } catch (e) {
+          $('plans').appendChild(el('div', 'empty', t('error')));
+        }
+        Homey.ready({ height: resize() });
+      };
+    }());
+  </script>
+</body>
+</html>

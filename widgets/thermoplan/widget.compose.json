@@ -1,0 +1,95 @@
+{
+  "name": {
+    "en": "ThermoPlan",
+    "fr": "ThermoPlan",
+    "nl": "ThermoPlan",
+    "de": "ThermoPlan"
+  },
+  "height": 320,
+  "settings": [
+    {
+      "id": "plan",
+      "type": "autocomplete",
+      "title": {
+        "en": "Schedule shown (empty = all)",
+        "fr": "Programme affiché (vide = tous)",
+        "nl": "Getoond schema (leeg = alle)",
+        "de": "Angezeigter Zeitplan (leer = alle)"
+      }
+    },
+    {
+      "id": "show_header",
+      "type": "checkbox",
+      "value": true,
+      "title": {
+        "en": "Show mode and season",
+        "fr": "Afficher le mode et la saison",
+        "nl": "Modus en seizoen tonen",
+        "de": "Modus und Jahreszeit anzeigen"
+      }
+    },
+    {
+      "id": "show_day",
+      "type": "checkbox",
+      "value": true,
+      "title": {
+        "en": "Show today's time slots",
+        "fr": "Afficher les plages du jour",
+        "nl": "Tijdvakken van vandaag tonen",
+        "de": "Heutige Zeitfenster anzeigen"
+      }
+    },
+    {
+      "id": "show_chart",
+      "type": "checkbox",
+      "value": true,
+      "title": {
+        "en": "Show the last 24 hours",
+        "fr": "Afficher les dernières 24 heures",
+        "nl": "Afgelopen 24 uur tonen",
+        "de": "Letzte 24 Stunden anzeigen"
+      }
+    },
+    {
+      "id": "show_disabled",
+      "type": "checkbox",
+      "value": true,
+      "title": {
+        "en": "Show disabled schedules",
+        "fr": "Afficher les programmes désactivés",
+        "nl": "Uitgeschakelde schema's tonen",
+        "de": "Deaktivierte Zeitpläne anzeigen"
+      }
+    }
+  ],
+  "api": {
+    "getState": {
+      "method": "GET",
+      "path": "/state"
+    },
+    "getHistory": {
+      "method": "GET",
+      "path": "/history"
+    },
+    "setMode": {
+      "method": "PUT",
+      "path": "/mode"
+    },
+    "setPlanEnabled": {
+      "method": "PUT",
+      "path": "/plans/:id/enabled"
+    },
+    "testPlan": {
+      "method": "POST",
+      "path": "/plans/:id/test"
+    },
+    "applyPlan": {
+      "method": "POST",
+      "path": "/plans/:id/apply"
+    },
+    "applyAll": {
+      "method": "POST",
+      "path": "/apply"
+    }
+  }
+}

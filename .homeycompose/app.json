@@ -1,0 +1,148 @@
+{
+  "id": "fr.cpistre.thermoplan",
+  "version": "2.12.1",
+  "compatibility": ">=12.3.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "ThermoPlan",
+    "fr": "ThermoPlan",
+    "nl": "ThermoPlan",
+    "de": "ThermoPlan"
+  },
+  "description": {
+    "en": "Heating, air conditioning and fans, season by season",
+    "fr": "Chauffage, climatisation et ventilation, au fil des saisons",
+    "nl": "Verwarming, airconditioning en ventilatie, seizoen na seizoen",
+    "de": "Heizung, Klimaanlage und Ventilatoren, Jahreszeit für Jahreszeit"
+  },
+  "category": [
+    "climate"
+  ],
+  "tags": {
+    "en": [
+      "heating",
+      "thermostat",
+      "schedule",
+      "air conditioning",
+      "cooling",
+      "fan",
+      "climate",
+      "outdoor temperature"
+    ],
+    "fr": [
+      "chauffage",
+      "thermostat",
+      "programmation",
+      "climatisation",
+      "ventilateur",
+      "clim",
+      "planning",
+      "température extérieure"
+    ],
+    "nl": [
+      "verwarming",
+      "thermostaat",
+      "schema",
+      "airconditioning",
+      "koeling",
+      "ventilator",
+      "airco",
+      "buitentemperatuur"
+    ],
+    "de": [
+      "Heizung",
+      "Thermostat",
+      "Zeitplan",
+      "Klimaanlage",
+      "Kühlung",
+      "Ventilator",
+      "Klima",
+      "Außentemperatur"
+    ]
+  },
+  "permissions": [
+    "homey:manager:api"
+  ],
+  "brandColor": "#E8590C",
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Christophe Pistre"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Markus Kling (application d’origine homey-heating, GPL-3.0)"
+      }
+    ]
+  },
+  "source": "https://github.com/chrisdecagnes/ThermoPlan",
+  "bugs": {
+    "url": "https://github.com/chrisdecagnes/ThermoPlan/issues"
+  },
+  "support": "https://github.com/chrisdecagnes/ThermoPlan/issues",
+  "api": {
+    "getState": {
+      "method": "GET",
+      "path": "/state"
+    },
+    "getPlans": {
+      "method": "GET",
+      "path": "/plans"
+    },
+    "getHistory": {
+      "method": "GET",
+      "path": "/history"
+    },
+    "newPlan": {
+      "method": "GET",
+      "path": "/new-plan"
+    },
+    "getPlan": {
+      "method": "GET",
+      "path": "/plans/:id"
+    },
+    "putPlan": {
+      "method": "PUT",
+      "path": "/plans/:id"
+    },
+    "deletePlan": {
+      "method": "DELETE",
+      "path": "/plans/:id"
+    },
+    "putPlans": {
+      "method": "PUT",
+      "path": "/plans"
+    },
+    "testPlan": {
+      "method": "POST",
+      "path": "/plans/:id/test"
+    },
+    "applyPlan": {
+      "method": "POST",
+      "path": "/plans/:id/apply"
+    },
+    "putMode": {
+      "method": "PUT",
+      "path": "/mode"
+    },
+    "putSeason": {
+      "method": "PUT",
+      "path": "/season"
+    },
+    "applyAll": {
+      "method": "POST",
+      "path": "/apply"
+    },
+    "getDevices": {
+      "method": "GET",
+      "path": "/devices"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "title": {
+    "en": "The season changed",
+    "fr": "La saison a changé",
+    "nl": "Het seizoen is gewijzigd",
+    "de": "Die Jahreszeit hat sich geändert"
+  },
+  "tokens": [
+    {
+      "name": "season",
+      "type": "string",
+      "title": {
+        "en": "Season",
+        "fr": "Saison",
+        "nl": "Seizoen",
+        "de": "Jahreszeit"
+      },
+      "example": {
+        "en": "Summer (cooling & fans)",
+        "fr": "Été (climatisation et ventilation)",
+        "nl": "Zomer (koeling en ventilatie)",
+        "de": "Sommer (Kühlung und Ventilatoren)"
+      }
+    }
+  ]
+}

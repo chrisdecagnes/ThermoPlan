@@ -1,0 +1,302 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script type="text/javascript" src="/homey.js" data-origin="settings"></script>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div id="tp">
+  <nav class="tabs"><div class="seg">
+    <button class="tab active" data-tab="overview" data-i18n="settings.tabs.overview">Aperçu</button>
+    <button class="tab" data-tab="plans" data-i18n="settings.tabs.plans">Programmes</button>
+    <button class="tab" data-tab="options" data-i18n="settings.tabs.options">Réglages</button>
+  </div></nav>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- ===================================================== Aperçu -->
+  <section id="tab-overview" class="panel">
+    <div class="card hero">
+      <div class="label" data-i18n="settings.overview.mode">Mode</div>
+      <div class="chips" id="mode-chips"></div>
+      <div class="label" data-i18n="settings.overview.season">Saison</div>
+      <div class="chips" id="season-chips"></div>
+      <div class="infos">
+        <span class="pill soft" id="season-info"></span>
+        <span class="pill soft" id="next-info"></span>
+      </div>
+      <p class="muted hidden" id="outdoor-info"></p>
+      <p class="away-banner hidden" id="away-info"></p>
+      <button id="apply-all" class="btn wide" data-i18n="settings.overview.apply">Appliquer maintenant</button>
+    </div>
+
+    <h3 data-i18n="settings.overview.plans">Programmes</h3>
+    <div id="overview-plans"></div>
+
+    <h3 data-i18n="settings.chart.title">Dernières 24 heures</h3>
+    <div class="card chart-card" id="chart-card">
+      <div class="chips" id="chart-plans"></div>
+      <div id="chart"></div>
+      <div class="legend" id="chart-legend"></div>
+      <p class="muted" id="chart-hint"></p>
+    </div>
+
+    <h3 data-i18n="settings.overview.devices">Appareils</h3>
+    <div id="overview-devices" class="list"></div>
+    <p class="muted center" id="app-version"></p>
+  </section>
+
+  <!-- ===================================================== Programmes -->
+  <section id="tab-plans" class="panel hidden">
+    <div id="plan-list-view">
+      <div class="actions">
+        <button class="chip chip-on heating" data-new="heating" data-i18n="settings.plans.new_heating">+ Chauffage</button>
+        <button class="chip chip-on cooling" data-new="cooling" data-i18n="settings.plans.new_cooling">+ Climatisation</button>
+        <button class="chip chip-on fan" data-new="fan" data-i18n="settings.plans.new_fan">+ Ventilation</button>
+      </div>
+      <div id="plan-list" class="list"></div>
+    </div>
+
+    <div id="plan-edit-view" class="hidden">
+      <button id="plan-back" class="link" data-i18n="settings.plans.back">← Retour</button>
+
+      <!-- En-tête : nom, état, enregistrement, test -->
+      <div class="card head">
+        <div class="head-row">
+          <span id="p-icon" class="badge heating">🔥</span>
+          <input id="p-name" class="title-input" type="text" maxlength="80" aria-label="Nom">
+          <label class="toggle"><input id="p-enabled" type="checkbox" class="switch"><span data-i18n="settings.plan.enabled">Actif</span></label>
+          <button id="plan-save" class="icon-btn primary" title="Enregistrer">💾</button>
+          <button id="plan-delete" class="icon-btn" title="Supprimer">🗑️</button>
+        </div>
+        <div class="status-row"><span id="p-badge" class="pill"></span><span id="p-status" class="muted"></span></div>
+        <div class="test-row">
+          <span class="muted" data-i18n="settings.plan.test">Tester :</span>
+          <button id="t-on" class="chip chip-on"></button>
+          <button id="t-off" class="chip"></button>
+          <button id="t-back" class="chip" data-i18n="settings.plan.test_back">↺ Revenir au programme</button>
+        </div>
+      </div>
+
+      <!-- Période de validité -->
+      <div class="card">
+        <div class="card-title">📅 <span data-i18n="settings.plan.period">Période de validité</span></div>
+        <div class="chips" id="p-period"></div>
+        <p class="muted" id="p-period-text"></p>
+        <div class="row" id="p-off-row">
+          <label for="p-off" data-i18n="settings.plan.off_out_of_season">Éteindre hors saison</label>
+          <input id="p-off" type="checkbox" class="switch">
+        </div>
+      </div>
+
+      <!-- Vue de la semaine -->
+      <div class="card">
+        <div id="week" class="week"></div>
+        <p class="muted center" data-i18n="settings.plan.legend">Touchez une plage du graphique pour la modifier.</p>
+      </div>
+
+      <!-- Valeur hors plages -->
+      <div class="card base-card">
+        <div class="row column">
+          <label data-i18n="settings.plan.base">En dehors des plages</label>
+          <div id="p-base"></div>
+          <p class="muted" id="p-base-hint"></p>
+        </div>
+      </div>
+
+      <!-- Plages -->
+      <div id="slots"></div>
+      <button id="slot-add" class="btn btn-light wide" data-i18n="settings.plan.add_slot">+ Ajouter une plage</button>
+
+      <!-- Fenêtre ouverte -->
+      <div class="card" id="window-card">
+        <div class="card-title">🪟 <span data-i18n="settings.plan.window_title">Fenêtre ouverte</span></div>
+        <div class="row">
+          <label for="w-enabled" data-i18n="settings.plan.window_enable">Arrêter si une fenêtre est ouverte</label>
+          <input id="w-enabled" type="checkbox" class="switch">
+        </div>
+        <div id="w-body">
+          <div class="row column">
+            <label data-i18n="settings.plan.window_scope">Ce qui s’arrête</label>
+            <div class="chips" id="w-scope"></div>
+            <p class="muted" id="w-scope-hint"></p>
+          </div>
+          <div class="row column">
+            <label data-i18n="settings.plan.window_delay">Arrêt au bout de</label>
+            <div id="w-delay"></div>
+          </div>
+          <div class="row column">
+            <label id="w-value-label"></label>
+            <div id="w-value"></div>
+            <p class="muted" id="w-value-hint"></p>
+          </div>
+          <div class="row column">
+            <label data-i18n="settings.plan.window_sensors">Capteurs</label>
+            <div class="chips" id="w-mode"></div>
+            <div class="checks" id="w-sensors"></div>
+            <p class="muted" id="w-found"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sonde de la pièce -->
+      <div class="card" id="room-card">
+        <div class="card-title">🌡️ <span data-i18n="settings.plan.room_title">Sonde de la pièce</span></div>
+        <div class="row column">
+          <label for="r-sensor" data-i18n="settings.plan.room_sensor">Sonde</label>
+          <select id="r-sensor"></select>
+          <p class="muted" id="r-now"></p>
+        </div>
+        <div id="r-body">
+          <div class="chips" id="r-mode"></div>
+          <p class="muted" id="r-mode-hint"></p>
+          <div class="row column" id="r-th-row">
+            <label data-i18n="settings.plan.room_threshold">Ventiler au-dessus de</label>
+            <div id="r-th"></div>
+          </div>
+          <div class="row column" id="r-h-row">
+            <label data-i18n="settings.plan.room_margin">Marge (±)</label>
+            <div id="r-h"></div>
+            <p class="muted" id="r-h-hint"></p>
+          </div>
+        </div>
+      </div>
+
+      <details class="card fold">
+        <summary data-i18n="settings.plan.overrides">Exceptions par mode</summary>
+        <p class="muted" data-i18n="settings.plan.overrides_text">Valeur appliquée à la place du programme lorsque le mode correspondant est actif.</p>
+        <div id="overrides"></div>
+      </details>
+
+      <details class="card fold" id="targets-fold">
+        <summary><span data-i18n="settings.plan.targets_title">Zones et appareils</span> <span id="targets-count" class="count"></span></summary>
+        <p class="muted" data-i18n="settings.plan.devices_text">Seuls les appareils compatibles avec le type de programme sont proposés.</p>
+        <h4 data-i18n="settings.plan.zones">Zones</h4>
+        <div class="checks" id="p-zones"></div>
+        <h4 data-i18n="settings.plan.devices">Appareils</h4>
+        <div class="checks" id="p-devices"></div>
+      </details>
+
+      <details class="card fold">
+        <summary data-i18n="settings.plan.more">Plus d’options</summary>
+        <div class="row">
+          <label for="p-type" data-i18n="settings.plan.type">Type</label>
+          <select id="p-type">
+            <option value="heating" data-i18n="types.heating">Chauffage</option>
+            <option value="cooling" data-i18n="types.cooling">Climatisation</option>
+            <option value="fan" data-i18n="types.fan">Ventilation</option>
+          </select>
+        </div>
+        <div class="row column">
+          <label for="p-desc" data-i18n="settings.plan.description">Description</label>
+          <input id="p-desc" type="text" maxlength="500">
+        </div>
+        <button id="plan-clone" class="btn btn-light" data-i18n="settings.plans.duplicate">Dupliquer</button>
+      </details>
+
+      <div class="actions sticky">
+        <span id="dirty" class="dirty hidden" data-i18n="settings.plan.dirty">Modifications non enregistrées</span>
+        <button id="plan-save2" class="btn" data-i18n="settings.common.save">Enregistrer</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== Réglages -->
+  <section id="tab-options" class="panel hidden">
+    <h3 data-i18n="settings.options.season_title">Saison selon les dates</h3>
+    <div class="card">
+      <p class="muted" data-i18n="settings.options.season_text">En mode « Automatique », l'été (climatisation et ventilation) s'étend entre ces deux dates (format MM-JJ). Le reste de l'année est l'hiver (chauffage).</p>
+      <div class="row">
+        <label for="o-cstart" data-i18n="settings.options.cooling_start">Début de l'été</label>
+        <input id="o-cstart" type="text" placeholder="06-01" pattern="\d{2}-\d{2}" maxlength="5">
+      </div>
+      <div class="row">
+        <label for="o-cend" data-i18n="settings.options.cooling_end">Fin de l'été</label>
+        <input id="o-cend" type="text" placeholder="09-15" pattern="\d{2}-\d{2}" maxlength="5">
+      </div>
+    </div>
+
+    <h3 data-i18n="settings.options.outdoor_title">Saison selon la température extérieure</h3>
+    <div class="card">
+      <p class="muted" data-i18n="settings.options.outdoor_text">En mode « Selon la température extérieure », la saison suit la moyenne glissante de la sonde choisie.</p>
+      <div class="row">
+        <label for="o-osensor" data-i18n="settings.options.outdoor_sensor">Sonde extérieure</label>
+        <select id="o-osensor"></select>
+      </div>
+      <div class="row">
+        <label for="o-ocool" data-i18n="settings.options.outdoor_cool">Été si la moyenne atteint (°C)</label>
+        <input id="o-ocool" type="number" min="5" max="35" step="0.5" inputmode="decimal">
+      </div>
+      <div class="row">
+        <label for="o-oheat" data-i18n="settings.options.outdoor_heat">Hiver si la moyenne descend à (°C)</label>
+        <input id="o-oheat" type="number" min="-10" max="30" step="0.5" inputmode="decimal">
+      </div>
+      <div class="row">
+        <label for="o-ohours" data-i18n="settings.options.outdoor_hours">Moyenne sur (heures)</label>
+        <input id="o-ohours" type="number" min="1" max="72" step="1" inputmode="numeric">
+      </div>
+    </div>
+
+    <h3 data-i18n="settings.options.away_title">Personne à la maison</h3>
+    <div class="card">
+      <p class="muted" data-i18n="settings.options.away_text">Quand plus personne n’est à la maison, toutes les programmations sont mises en pause.</p>
+      <div class="row">
+        <label for="a-enabled" data-i18n="settings.options.away_enable">Mettre en pause si personne n’est à la maison</label>
+        <input id="a-enabled" type="checkbox" class="switch">
+      </div>
+      <div id="a-body">
+        <div class="row column"><label data-i18n="settings.options.away_delay">Après une absence de</label><div id="a-delay"></div></div>
+        <div class="row column"><label data-i18n="settings.options.away_heating">Chauffage pendant l’absence</label><div id="a-heating"></div>
+          <p class="muted" data-i18n="settings.options.away_other">Climatisation et ventilation : arrêtées.</p></div>
+        <p class="muted" id="a-users"></p>
+      </div>
+    </div>
+
+    <h3 data-i18n="settings.options.conflicts_title">Conflits entre programmes</h3>
+    <div class="card">
+      <p class="muted" data-i18n="settings.options.conflicts_text">Si un appareil appartient à plusieurs programmes actifs, quelle consigne retenir ?</p>
+      <div class="row">
+        <label for="o-hconf" data-i18n="types.heating">Chauffage</label>
+        <select id="o-hconf">
+          <option value="max" data-i18n="settings.options.max">La plus haute</option>
+          <option value="min" data-i18n="settings.options.min">La plus basse</option>
+        </select>
+      </div>
+      <div class="row">
+        <label for="o-cconf" data-i18n="types.cooling">Climatisation</label>
+        <select id="o-cconf">
+          <option value="min" data-i18n="settings.options.min">La plus basse</option>
+          <option value="max" data-i18n="settings.options.max">La plus haute</option>
+        </select>
+      </div>
+    </div>
+
+    <h3 data-i18n="settings.options.notifications_title">Notifications</h3>
+    <div class="card">
+      <div class="row"><label for="o-nmode" data-i18n="settings.options.notify_mode">Changement de mode</label><input id="o-nmode" type="checkbox" class="switch"></div>
+      <div class="row"><label for="o-nseason" data-i18n="settings.options.notify_season">Changement de saison</label><input id="o-nseason" type="checkbox" class="switch"></div>
+      <div class="row"><label for="o-nok" data-i18n="settings.options.notify_success">Consigne envoyée</label><input id="o-nok" type="checkbox" class="switch"></div>
+      <div class="row"><label for="o-nerr" data-i18n="settings.options.notify_error">Erreur d'envoi</label><input id="o-nerr" type="checkbox" class="switch"></div>
+      <div class="row"><label for="o-nwin" data-i18n="settings.options.notify_window">Fenêtre ouverte / fermée</label><input id="o-nwin" type="checkbox" class="switch"></div>
+      <div class="row"><label for="o-naway" data-i18n="settings.options.notify_away">Absence / retour</label><input id="o-naway" type="checkbox" class="switch"></div>
+    </div>
+    <button id="options-save" class="btn" data-i18n="settings.common.save">Enregistrer</button>
+
+    <h3 data-i18n="settings.options.backup_title">Sauvegarde et restauration</h3>
+    <div class="card">
+      <p class="muted" data-i18n="settings.options.backup_text">Copiez ce texte pour sauvegarder vos programmes. Coller un autre contenu puis « Restaurer » remplace tous les programmes existants (les sauvegardes de l'application d'origine sont acceptées).</p>
+      <textarea id="backup" rows="8" spellcheck="false"></textarea>
+      <div class="actions">
+        <button id="backup-refresh" class="btn btn-light" data-i18n="settings.options.export">Exporter</button>
+        <button id="backup-restore" class="btn btn-danger" data-i18n="settings.options.restore">Restaurer</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+  <script src="./slots.js"></script>
+  <script src="./settings.js"></script>
+</body>
+</html>

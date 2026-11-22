@@ -1,0 +1,26 @@
+{
+  "name": "fr.cpistre.thermoplan",
+  "version": "2.12.1",
+  "description": "ThermoPlan : chauffage, climatisation et ventilation pour Homey (SDK 3)",
+  "main": "app.js",
+  "license": "GPL-3.0",
+  "private": true,
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "compose": "python3 scripts/compose-src.py && python3 scripts/locales-src.py && python3 scripts/compose.py",
+    "validate": "homey app validate --level publish",
+    "run": "homey app run",
+    "install-homey": "homey app install",
+    "publish-homey": "homey app publish",
+    "bench": "node bench/server.js 8123 fr",
+    "check-ui": "node bench/check.js",
+    "previews": "node bench/check.js --langs en --previews",
+    "images": "node scripts/render-images.js"
+  },
+  "dependencies": {
+    "homey-api": "^3.4.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

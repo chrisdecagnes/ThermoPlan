@@ -1,0 +1,1128 @@
+{
+  "_comment": "Ce fichier est généré depuis .homeycompose, ne pas modifier directement.",
+  "id": "fr.cpistre.thermoplan",
+  "version": "2.12.1",
+  "compatibility": ">=12.3.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "ThermoPlan",
+    "fr": "ThermoPlan",
+    "nl": "ThermoPlan",
+    "de": "ThermoPlan"
+  },
+  "description": {
+    "en": "Heating, air conditioning and fans, season by season",
+    "fr": "Chauffage, climatisation et ventilation, au fil des saisons",
+    "nl": "Verwarming, airconditioning en ventilatie, seizoen na seizoen",
+    "de": "Heizung, Klimaanlage und Ventilatoren, Jahreszeit für Jahreszeit"
+  },
+  "category": [
+    "climate"
+  ],
+  "tags": {
+    "en": [
+      "heating",
+      "thermostat",
+      "schedule",
+      "air conditioning",
+      "cooling",
+      "fan",
+      "climate",
+      "outdoor temperature"
+    ],
+    "fr": [
+      "chauffage",
+      "thermostat",
+      "programmation",
+      "climatisation",
+      "ventilateur",
+      "clim",
+      "planning",
+      "température extérieure"
+    ],
+    "nl": [
+      "verwarming",
+      "thermostaat",
+      "schema",
+      "airconditioning",
+      "koeling",
+      "ventilator",
+      "airco",
+      "buitentemperatuur"
+    ],
+    "de": [
+      "Heizung",
+      "Thermostat",
+      "Zeitplan",
+      "Klimaanlage",
+      "Kühlung",
+      "Ventilator",
+      "Klima",
+      "Außentemperatur"
+    ]
+  },
+  "permissions": [
+    "homey:manager:api"
+  ],
+  "brandColor": "#E8590C",
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Christophe Pistre"
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Markus Kling (application d’origine homey-heating, GPL-3.0)"
+      }
+    ]
+  },
+  "source": "https://github.com/chrisdecagnes/ThermoPlan",
+  "bugs": {
+    "url": "https://github.com/chrisdecagnes/ThermoPlan/issues"
+  },
+  "support": "https://github.com/chrisdecagnes/ThermoPlan/issues",
+  "api": {
+    "getState": {
+      "method": "GET",
+      "path": "/state"
+    },
+    "getPlans": {
+      "method": "GET",
+      "path": "/plans"
+    },
+    "getHistory": {
+      "method": "GET",
+      "path": "/history"
+    },
+    "newPlan": {
+      "method": "GET",
+      "path": "/new-plan"
+    },
+    "getPlan": {
+      "method": "GET",
+      "path": "/plans/:id"
+    },
+    "putPlan": {
+      "method": "PUT",
+      "path": "/plans/:id"
+    },
+    "deletePlan": {
+      "method": "DELETE",
+      "path": "/plans/:id"
+    },
+    "putPlans": {
+      "method": "PUT",
+      "path": "/plans"
+    },
+    "testPlan": {
+      "method": "POST",
+      "path": "/plans/:id/test"
+    },
+    "applyPlan": {
+      "method": "POST",
+      "path": "/plans/:id/apply"
+    },
+    "putMode": {
+      "method": "PUT",
+      "path": "/mode"
+    },
+    "putSeason": {
+      "method": "PUT",
+      "path": "/season"
+    },
+    "applyAll": {
+      "method": "POST",
+      "path": "/apply"
+    },
+    "getDevices": {
+      "method": "GET",
+      "path": "/devices"
+    }
+  },
+  "capabilities": {
+    "thermostat_override": {
+      "type": "enum",
+      "title": {
+        "en": "Thermostat mode",
+        "fr": "Mode du thermostat",
+        "nl": "Thermostaatmodus",
+        "de": "Thermostatmodus"
+      },
+      "getable": true,
+      "setable": true,
+      "uiComponent": "picker",
+      "icon": "/assets/override.svg",
+      "values": [
+        {
+          "id": "0",
+          "title": {
+            "en": "Schedule (automatic)",
+            "fr": "Programme (automatique)",
+            "nl": "Schema (automatisch)",
+            "de": "Zeitplan (automatisch)"
+          }
+        },
+        {
+          "id": "6",
+          "title": {
+            "en": "Manual until midnight",
+            "fr": "Manuel jusqu’à minuit",
+            "nl": "Handmatig tot middernacht",
+            "de": "Manuell bis Mitternacht"
+          }
+        },
+        {
+          "id": "7",
+          "title": {
+            "en": "Fully manual",
+            "fr": "Entièrement manuel",
+            "nl": "Volledig handmatig",
+            "de": "Vollständig manuell"
+          }
+        }
+      ]
+    }
+  },
+  "drivers": [
+    {
+      "id": "virtual-thermostat",
+      "name": {
+        "en": "Virtual thermostat",
+        "fr": "Thermostat virtuel",
+        "nl": "Virtuele thermostaat",
+        "de": "Virtueller Thermostat"
+      },
+      "class": "thermostat",
+      "capabilities": [
+        "target_temperature",
+        "measure_temperature",
+        "thermostat_override"
+      ],
+      "capabilitiesOptions": {
+        "target_temperature": {
+          "min": 4,
+          "max": 35,
+          "step": 0.5
+        }
+      },
+      "platforms": [
+        "local"
+      ],
+      "connectivity": [],
+      "images": {
+        "small": "/drivers/virtual-thermostat/assets/images/small.png",
+        "large": "/drivers/virtual-thermostat/assets/images/large.png",
+        "xlarge": "/drivers/virtual-thermostat/assets/images/xlarge.png"
+      },
+      "pair": [
+        {
+          "id": "list_devices",
+          "template": "list_devices",
+          "navigation": {
+            "next": "add_devices"
+          }
+        },
+        {
+          "id": "add_devices",
+          "template": "add_devices"
+        }
+      ]
+    }
+  ],
+  "widgets": {
+    "thermoplan": {
+      "name": {
+        "en": "ThermoPlan",
+        "fr": "ThermoPlan",
+        "nl": "ThermoPlan",
+        "de": "ThermoPlan"
+      },
+      "height": 320,
+      "settings": [
+        {
+          "id": "plan",
+          "type": "autocomplete",
+          "title": {
+            "en": "Schedule shown (empty = all)",
+            "fr": "Programme affiché (vide = tous)",
+            "nl": "Getoond schema (leeg = alle)",
+            "de": "Angezeigter Zeitplan (leer = alle)"
+          }
+        },
+        {
+          "id": "show_header",
+          "type": "checkbox",
+          "value": true,
+          "title": {
+            "en": "Show mode and season",
+            "fr": "Afficher le mode et la saison",
+            "nl": "Modus en seizoen tonen",
+            "de": "Modus und Jahreszeit anzeigen"
+          }
+        },
+        {
+          "id": "show_day",
+          "type": "checkbox",
+          "value": true,
+          "title": {
+            "en": "Show today's time slots",
+            "fr": "Afficher les plages du jour",
+            "nl": "Tijdvakken van vandaag tonen",
+            "de": "Heutige Zeitfenster anzeigen"
+          }
+        },
+        {
+          "id": "show_chart",
+          "type": "checkbox",
+          "value": true,
+          "title": {
+            "en": "Show the last 24 hours",
+            "fr": "Afficher les dernières 24 heures",
+            "nl": "Afgelopen 24 uur tonen",
+            "de": "Letzte 24 Stunden anzeigen"
+          }
+        },
+        {
+          "id": "show_disabled",
+          "type": "checkbox",
+          "value": true,
+          "title": {
+            "en": "Show disabled schedules",
+            "fr": "Afficher les programmes désactivés",
+            "nl": "Uitgeschakelde schema's tonen",
+            "de": "Deaktivierte Zeitpläne anzeigen"
+          }
+        }
+      ],
+      "api": {
+        "getState": {
+          "method": "GET",
+          "path": "/state"
+        },
+        "getHistory": {
+          "method": "GET",
+          "path": "/history"
+        },
+        "setMode": {
+          "method": "PUT",
+          "path": "/mode"
+        },
+        "setPlanEnabled": {
+          "method": "PUT",
+          "path": "/plans/:id/enabled"
+        },
+        "testPlan": {
+          "method": "POST",
+          "path": "/plans/:id/test"
+        },
+        "applyPlan": {
+          "method": "POST",
+          "path": "/plans/:id/apply"
+        },
+        "applyAll": {
+          "method": "POST",
+          "path": "/apply"
+        }
+      }
+    }
+  },
+  "flow": {
+    "triggers": [
+      {
+        "id": "away_ended",
+        "title": {
+          "en": "Schedules resumed (someone is home)",
+          "fr": "Les programmations ont repris (retour à la maison)",
+          "nl": "Schema's hervat (iemand is thuis)",
+          "de": "Zeitpläne fortgesetzt (jemand ist zu Hause)"
+        }
+      },
+      {
+        "id": "away_started",
+        "title": {
+          "en": "Schedules were paused (nobody home)",
+          "fr": "Les programmations sont en pause (personne à la maison)",
+          "nl": "Schema's zijn gepauzeerd (niemand thuis)",
+          "de": "Zeitpläne wurden pausiert (niemand zu Hause)"
+        }
+      },
+      {
+        "id": "mode_changed",
+        "title": {
+          "en": "The mode changed",
+          "fr": "Le mode a changé",
+          "nl": "De modus is gewijzigd",
+          "de": "Der Modus hat sich geändert"
+        },
+        "tokens": [
+          {
+            "name": "mode",
+            "type": "string",
+            "title": {
+              "en": "Mode",
+              "fr": "Mode",
+              "nl": "Modus",
+              "de": "Modus"
+            },
+            "example": {
+              "en": "Automatic",
+              "fr": "Automatique",
+              "nl": "Automatisch",
+              "de": "Automatisch"
+            }
+          }
+        ]
+      },
+      {
+        "id": "outdoor_average_changed",
+        "title": {
+          "en": "The average outdoor temperature changed",
+          "fr": "La température extérieure moyenne a changé",
+          "nl": "De gemiddelde buitentemperatuur is gewijzigd",
+          "de": "Die durchschnittliche Außentemperatur hat sich geändert"
+        },
+        "hint": {
+          "en": "Average over the period set in ThermoPlan, rounded to 0.5 °C. Requires an outdoor sensor.",
+          "fr": "Moyenne sur la durée réglée dans ThermoPlan, arrondie à 0,5 °C. Nécessite une sonde extérieure.",
+          "nl": "Gemiddelde over de in ThermoPlan ingestelde periode, afgerond op 0,5 °C. Vereist een buitensensor.",
+          "de": "Durchschnitt über den in ThermoPlan eingestellten Zeitraum, auf 0,5 °C gerundet. Erfordert einen Außensensor."
+        },
+        "tokens": [
+          {
+            "name": "average",
+            "type": "number",
+            "title": {
+              "en": "Average",
+              "fr": "Moyenne",
+              "nl": "Gemiddelde",
+              "de": "Durchschnitt"
+            },
+            "example": 18.5
+          },
+          {
+            "name": "previous",
+            "type": "number",
+            "title": {
+              "en": "Previous average",
+              "fr": "Moyenne précédente",
+              "nl": "Vorig gemiddelde",
+              "de": "Vorheriger Durchschnitt"
+            },
+            "example": 18
+          }
+        ]
+      },
+      {
+        "id": "season_changed",
+        "title": {
+          "en": "The season changed",
+          "fr": "La saison a changé",
+          "nl": "Het seizoen is gewijzigd",
+          "de": "Die Jahreszeit hat sich geändert"
+        },
+        "tokens": [
+          {
+            "name": "season",
+            "type": "string",
+            "title": {
+              "en": "Season",
+              "fr": "Saison",
+              "nl": "Seizoen",
+              "de": "Jahreszeit"
+            },
+            "example": {
+              "en": "Summer (cooling & fans)",
+              "fr": "Été (climatisation et ventilation)",
+              "nl": "Zomer (koeling en ventilatie)",
+              "de": "Sommer (Kühlung und Ventilatoren)"
+            }
+          }
+        ]
+      },
+      {
+        "id": "thermostat_override_changed",
+        "title": {
+          "en": "The thermostat mode changed",
+          "fr": "Le mode du thermostat a changé",
+          "nl": "De thermostaatmodus is gewijzigd",
+          "de": "Der Thermostatmodus hat sich geändert"
+        },
+        "tokens": [
+          {
+            "name": "mode",
+            "type": "string",
+            "title": {
+              "en": "Mode",
+              "fr": "Mode",
+              "nl": "Modus",
+              "de": "Modus"
+            },
+            "example": {
+              "en": "Manual until midnight",
+              "fr": "Manuel jusqu’à minuit",
+              "nl": "Handmatig tot middernacht",
+              "de": "Manuell bis Mitternacht"
+            }
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=virtual-thermostat"
+          }
+        ]
+      }
+    ],
+    "conditions": [
+      {
+        "id": "away_active",
+        "title": {
+          "en": "Schedules !{{are|are not}} paused (nobody home)",
+          "fr": "Les programmations !{{sont|ne sont pas}} en pause (absence)",
+          "nl": "Schema's !{{zijn|zijn niet}} gepauzeerd (niemand thuis)",
+          "de": "Zeitpläne !{{sind|sind nicht}} pausiert (niemand zu Hause)"
+        }
+      },
+      {
+        "id": "mode_is",
+        "title": {
+          "en": "The mode is !{{|not}}...",
+          "fr": "Le mode !{{est|n’est pas}}...",
+          "nl": "De modus is !{{|niet}}...",
+          "de": "Der Modus ist !{{|nicht}}..."
+        },
+        "titleFormatted": {
+          "en": "The mode !{{is|is not}} [[mode]]",
+          "fr": "Le mode !{{est|n’est pas}} [[mode]]",
+          "nl": "De modus !{{is|is niet}} [[mode]]",
+          "de": "Der Modus !{{ist|ist nicht}} [[mode]]"
+        },
+        "args": [
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "title": {
+              "en": "Mode",
+              "fr": "Mode",
+              "nl": "Modus",
+              "de": "Modus"
+            },
+            "values": [
+              {
+                "id": "0",
+                "label": {
+                  "en": "Automatic",
+                  "fr": "Automatique",
+                  "nl": "Automatisch",
+                  "de": "Automatisch"
+                }
+              },
+              {
+                "id": "1",
+                "label": {
+                  "en": "One day at home",
+                  "fr": "Journée à la maison",
+                  "nl": "Een dag thuis",
+                  "de": "Ein Tag zu Hause"
+                }
+              },
+              {
+                "id": "2",
+                "label": {
+                  "en": "One day away from home",
+                  "fr": "Journée d’absence",
+                  "nl": "Een dag van huis",
+                  "de": "Ein Tag außer Haus"
+                }
+              },
+              {
+                "id": "3",
+                "label": {
+                  "en": "Sleeping",
+                  "fr": "Nuit",
+                  "nl": "Nacht",
+                  "de": "Nacht"
+                }
+              },
+              {
+                "id": "4",
+                "label": {
+                  "en": "Holiday",
+                  "fr": "Vacances",
+                  "nl": "Vakantie",
+                  "de": "Urlaub"
+                }
+              },
+              {
+                "id": "5",
+                "label": {
+                  "en": "Out of season",
+                  "fr": "Hors saison",
+                  "nl": "Buiten seizoen",
+                  "de": "Außerhalb der Saison"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "plan_enabled",
+        "title": {
+          "en": "A schedule !{{is|is not}} enabled",
+          "fr": "Un programme !{{est|n’est pas}} activé",
+          "nl": "Een schema !{{is|is niet}} ingeschakeld",
+          "de": "Ein Zeitplan !{{ist|ist nicht}} aktiviert"
+        },
+        "titleFormatted": {
+          "en": "Schedule [[plan]] !{{is|is not}} enabled",
+          "fr": "Le programme [[plan]] !{{est|n’est pas}} activé",
+          "nl": "Schema [[plan]] !{{is|is niet}} ingeschakeld",
+          "de": "Zeitplan [[plan]] !{{ist|ist nicht}} aktiviert"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "plan",
+            "title": {
+              "en": "Schedule",
+              "fr": "Programme",
+              "nl": "Schema",
+              "de": "Zeitplan"
+            },
+            "placeholder": {
+              "en": "Search for a schedule...",
+              "fr": "Rechercher un programme...",
+              "nl": "Zoek een schema...",
+              "de": "Zeitplan suchen..."
+            }
+          }
+        ]
+      },
+      {
+        "id": "season_is",
+        "title": {
+          "en": "The season !{{is|is not}}...",
+          "fr": "La saison !{{est|n’est pas}}...",
+          "nl": "Het seizoen !{{is|is niet}}...",
+          "de": "Die Jahreszeit !{{ist|ist nicht}}..."
+        },
+        "titleFormatted": {
+          "en": "The season !{{is|is not}} [[season]]",
+          "fr": "La saison !{{est|n’est pas}} [[season]]",
+          "nl": "Het seizoen !{{is|is niet}} [[season]]",
+          "de": "Die Jahreszeit !{{ist|ist nicht}} [[season]]"
+        },
+        "args": [
+          {
+            "type": "dropdown",
+            "name": "season",
+            "title": {
+              "en": "Season",
+              "fr": "Saison",
+              "nl": "Seizoen",
+              "de": "Jahreszeit"
+            },
+            "values": [
+              {
+                "id": "heating",
+                "label": {
+                  "en": "Winter (heating)",
+                  "fr": "Hiver (chauffage)",
+                  "nl": "Winter (verwarming)",
+                  "de": "Winter (Heizung)"
+                }
+              },
+              {
+                "id": "cooling",
+                "label": {
+                  "en": "Summer (cooling & fans)",
+                  "fr": "Été (climatisation et ventilation)",
+                  "nl": "Zomer (koeling en ventilatie)",
+                  "de": "Sommer (Kühlung und Ventilatoren)"
+                }
+              },
+              {
+                "id": "off",
+                "label": {
+                  "en": "Mid-season",
+                  "fr": "Mi-saison",
+                  "nl": "Tussenseizoen",
+                  "de": "Übergangszeit"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "thermostat_override_is",
+        "title": {
+          "en": "Thermostat mode !{{is|is not}}...",
+          "fr": "Le mode du thermostat !{{est|n’est pas}}...",
+          "nl": "Thermostaatmodus !{{is|is niet}}...",
+          "de": "Thermostatmodus !{{ist|ist nicht}}..."
+        },
+        "titleFormatted": {
+          "en": "Thermostat mode !{{is|is not}} [[mode]]",
+          "fr": "Le mode du thermostat !{{est|n’est pas}} [[mode]]",
+          "nl": "Thermostaatmodus !{{is|is niet}} [[mode]]",
+          "de": "Thermostatmodus !{{ist|ist nicht}} [[mode]]"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=virtual-thermostat"
+          },
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "title": {
+              "en": "Mode",
+              "fr": "Mode",
+              "nl": "Modus",
+              "de": "Modus"
+            },
+            "values": [
+              {
+                "id": "0",
+                "label": {
+                  "en": "Schedule (automatic)",
+                  "fr": "Programme (automatique)",
+                  "nl": "Schema (automatisch)",
+                  "de": "Zeitplan (automatisch)"
+                }
+              },
+              {
+                "id": "6",
+                "label": {
+                  "en": "Manual until midnight",
+                  "fr": "Manuel jusqu’à minuit",
+                  "nl": "Handmatig tot middernacht",
+                  "de": "Manuell bis Mitternacht"
+                }
+              },
+              {
+                "id": "7",
+                "label": {
+                  "en": "Fully manual",
+                  "fr": "Entièrement manuel",
+                  "nl": "Volledig handmatig",
+                  "de": "Vollständig manuell"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "apply_all",
+        "title": {
+          "en": "Apply all active schedules",
+          "fr": "Appliquer tous les programmes actifs",
+          "nl": "Alle actieve schema's toepassen",
+          "de": "Alle aktiven Zeitpläne anwenden"
+        },
+        "hint": {
+          "en": "Re-sends the current set points to all devices.",
+          "fr": "Renvoie les consignes en cours à tous les appareils.",
+          "nl": "Stuurt de huidige doeltemperaturen opnieuw naar alle apparaten.",
+          "de": "Sendet die aktuellen Solltemperaturen erneut an alle Geräte."
+        }
+      },
+      {
+        "id": "apply_plan",
+        "title": {
+          "en": "Apply a schedule",
+          "fr": "Appliquer un programme",
+          "nl": "Een schema toepassen",
+          "de": "Einen Zeitplan anwenden"
+        },
+        "titleFormatted": {
+          "en": "Apply schedule [[plan]]",
+          "fr": "Appliquer le programme [[plan]]",
+          "nl": "Schema [[plan]] toepassen",
+          "de": "Zeitplan [[plan]] anwenden"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "plan",
+            "title": {
+              "en": "Schedule",
+              "fr": "Programme",
+              "nl": "Schema",
+              "de": "Zeitplan"
+            },
+            "placeholder": {
+              "en": "Search for a schedule...",
+              "fr": "Rechercher un programme...",
+              "nl": "Zoek een schema...",
+              "de": "Zeitplan suchen..."
+            }
+          }
+        ]
+      },
+      {
+        "id": "set_away",
+        "title": {
+          "en": "Set the away mode",
+          "fr": "Régler l’absence",
+          "nl": "Afwezigheidsmodus instellen",
+          "de": "Abwesenheitsmodus einstellen"
+        },
+        "titleFormatted": {
+          "en": "Away mode: [[state]]",
+          "fr": "Absence : [[state]]",
+          "nl": "Afwezigheidsmodus: [[state]]",
+          "de": "Abwesenheitsmodus: [[state]]"
+        },
+        "hint": {
+          "en": "Nobody home pauses every schedule. “Automatic” follows the presence of Homey users.",
+          "fr": "Personne à la maison met toutes les programmations en pause. « Automatique » suit la présence des utilisateurs Homey.",
+          "nl": "Niemand thuis pauzeert elk schema. „Automatisch” volgt de aanwezigheid van Homey-gebruikers.",
+          "de": "Niemand zu Hause pausiert jeden Zeitplan. „Automatisch“ folgt der Anwesenheit der Homey-Benutzer."
+        },
+        "args": [
+          {
+            "type": "dropdown",
+            "name": "state",
+            "title": {
+              "en": "State",
+              "fr": "État",
+              "nl": "Status",
+              "de": "Zustand"
+            },
+            "values": [
+              {
+                "id": "auto",
+                "label": {
+                  "en": "Automatic (Homey presence)",
+                  "fr": "Automatique (présence Homey)",
+                  "nl": "Automatisch (Homey-aanwezigheid)",
+                  "de": "Automatisch (Homey-Anwesenheit)"
+                }
+              },
+              {
+                "id": "away",
+                "label": {
+                  "en": "Nobody home (pause)",
+                  "fr": "Personne à la maison (pause)",
+                  "nl": "Niemand thuis (pauze)",
+                  "de": "Niemand zu Hause (Pause)"
+                }
+              },
+              {
+                "id": "home",
+                "label": {
+                  "en": "Someone is home",
+                  "fr": "Quelqu’un est à la maison",
+                  "nl": "Iemand is thuis",
+                  "de": "Jemand ist zu Hause"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "set_mode",
+        "title": {
+          "en": "Set the mode",
+          "fr": "Changer le mode",
+          "nl": "Modus instellen",
+          "de": "Modus einstellen"
+        },
+        "titleFormatted": {
+          "en": "Set the mode to [[mode]]",
+          "fr": "Passer en mode [[mode]]",
+          "nl": "Modus instellen op [[mode]]",
+          "de": "Modus auf [[mode]] setzen"
+        },
+        "args": [
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "title": {
+              "en": "Mode",
+              "fr": "Mode",
+              "nl": "Modus",
+              "de": "Modus"
+            },
+            "values": [
+              {
+                "id": "0",
+                "label": {
+                  "en": "Automatic",
+                  "fr": "Automatique",
+                  "nl": "Automatisch",
+                  "de": "Automatisch"
+                }
+              },
+              {
+                "id": "1",
+                "label": {
+                  "en": "One day at home",
+                  "fr": "Journée à la maison",
+                  "nl": "Een dag thuis",
+                  "de": "Ein Tag zu Hause"
+                }
+              },
+              {
+                "id": "2",
+                "label": {
+                  "en": "One day away from home",
+                  "fr": "Journée d’absence",
+                  "nl": "Een dag van huis",
+                  "de": "Ein Tag außer Haus"
+                }
+              },
+              {
+                "id": "3",
+                "label": {
+                  "en": "Sleeping",
+                  "fr": "Nuit",
+                  "nl": "Nacht",
+                  "de": "Nacht"
+                }
+              },
+              {
+                "id": "4",
+                "label": {
+                  "en": "Holiday",
+                  "fr": "Vacances",
+                  "nl": "Vakantie",
+                  "de": "Urlaub"
+                }
+              },
+              {
+                "id": "5",
+                "label": {
+                  "en": "Out of season",
+                  "fr": "Hors saison",
+                  "nl": "Buiten seizoen",
+                  "de": "Außerhalb der Saison"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "set_plan_state",
+        "title": {
+          "en": "Enable or disable a schedule",
+          "fr": "Activer ou désactiver un programme",
+          "nl": "Een schema in- of uitschakelen",
+          "de": "Einen Zeitplan aktivieren oder deaktivieren"
+        },
+        "titleFormatted": {
+          "en": "Set schedule [[plan]] to [[state]]",
+          "fr": "Programme [[plan]] [[state]]",
+          "nl": "Schema [[plan]] op [[state]] zetten",
+          "de": "Zeitplan [[plan]] auf [[state]] setzen"
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "plan",
+            "title": {
+              "en": "Schedule",
+              "fr": "Programme",
+              "nl": "Schema",
+              "de": "Zeitplan"
+            },
+            "placeholder": {
+              "en": "Search for a schedule...",
+              "fr": "Rechercher un programme...",
+              "nl": "Zoek een schema...",
+              "de": "Zeitplan suchen..."
+            }
+          },
+          {
+            "type": "dropdown",
+            "name": "state",
+            "title": {
+              "en": "State",
+              "fr": "État",
+              "nl": "Status",
+              "de": "Zustand"
+            },
+            "values": [
+              {
+                "id": "true",
+                "label": {
+                  "en": "enabled",
+                  "fr": "activé",
+                  "nl": "ingeschakeld",
+                  "de": "aktiviert"
+                }
+              },
+              {
+                "id": "false",
+                "label": {
+                  "en": "disabled",
+                  "fr": "désactivé",
+                  "nl": "uitgeschakeld",
+                  "de": "deaktiviert"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "set_season",
+        "title": {
+          "en": "Set the season",
+          "fr": "Changer la saison",
+          "nl": "Seizoen instellen",
+          "de": "Jahreszeit einstellen"
+        },
+        "titleFormatted": {
+          "en": "Set the season to [[season]]",
+          "fr": "Régler la saison sur [[season]]",
+          "nl": "Seizoen instellen op [[season]]",
+          "de": "Jahreszeit auf [[season]] setzen"
+        },
+        "hint": {
+          "en": "Winter runs the heating schedules, summer the cooling and fan schedules.",
+          "fr": "L’hiver active les programmes de chauffage, l’été ceux de climatisation et de ventilation.",
+          "nl": "De winter voert de verwarmingsschema's uit, de zomer de koel- en ventilatieschema's.",
+          "de": "Im Winter laufen die Heizzeitpläne, im Sommer die Kühl- und Lüftungszeitpläne."
+        },
+        "args": [
+          {
+            "type": "dropdown",
+            "name": "season",
+            "title": {
+              "en": "Season",
+              "fr": "Saison",
+              "nl": "Seizoen",
+              "de": "Jahreszeit"
+            },
+            "values": [
+              {
+                "id": "auto",
+                "label": {
+                  "en": "Automatic (by date)",
+                  "fr": "Automatique (selon les dates)",
+                  "nl": "Automatisch (op datum)",
+                  "de": "Automatisch (nach Datum)"
+                }
+              },
+              {
+                "id": "outdoor",
+                "label": {
+                  "en": "By outdoor temperature",
+                  "fr": "Selon la température extérieure",
+                  "nl": "Volgens buitentemperatuur",
+                  "de": "Nach Außentemperatur"
+                }
+              },
+              {
+                "id": "heating",
+                "label": {
+                  "en": "Winter (heating)",
+                  "fr": "Hiver (chauffage)",
+                  "nl": "Winter (verwarming)",
+                  "de": "Winter (Heizung)"
+                }
+              },
+              {
+                "id": "cooling",
+                "label": {
+                  "en": "Summer (cooling & fans)",
+                  "fr": "Été (climatisation et ventilation)",
+                  "nl": "Zomer (koeling en ventilatie)",
+                  "de": "Sommer (Kühlung und Ventilatoren)"
+                }
+              },
+              {
+                "id": "off",
+                "label": {
+                  "en": "Mid-season (nothing controlled)",
+                  "fr": "Mi-saison (aucun pilotage)",
+                  "nl": "Tussenseizoen (niets aangestuurd)",
+                  "de": "Übergangszeit (keine Steuerung)"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "set_thermostat_override",
+        "title": {
+          "en": "Set the thermostat mode",
+          "fr": "Changer le mode du thermostat",
+          "nl": "Thermostaatmodus instellen",
+          "de": "Thermostatmodus einstellen"
+        },
+        "titleFormatted": {
+          "en": "Set the thermostat mode to [[mode]]",
+          "fr": "Passer le thermostat en [[mode]]",
+          "nl": "Thermostaatmodus instellen op [[mode]]",
+          "de": "Thermostatmodus auf [[mode]] setzen"
+        },
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=virtual-thermostat"
+          },
+          {
+            "type": "dropdown",
+            "name": "mode",
+            "title": {
+              "en": "Mode",
+              "fr": "Mode",
+              "nl": "Modus",
+              "de": "Modus"
+            },
+            "values": [
+              {
+                "id": "0",
+                "label": {
+                  "en": "Schedule (automatic)",
+                  "fr": "Programme (automatique)",
+                  "nl": "Schema (automatisch)",
+                  "de": "Zeitplan (automatisch)"
+                }
+              },
+              {
+                "id": "6",
+                "label": {
+                  "en": "Manual until midnight",
+                  "fr": "Manuel jusqu’à minuit",
+                  "nl": "Handmatig tot middernacht",
+                  "de": "Manuell bis Mitternacht"
+                }
+              },
+              {
+                "id": "7",
+                "label": {
+                  "en": "Fully manual",
+                  "fr": "Entièrement manuel",
+                  "nl": "Volledig handmatig",
+                  "de": "Vollständig manuell"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

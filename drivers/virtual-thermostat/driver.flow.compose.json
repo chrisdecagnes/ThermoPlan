@@ -1,0 +1,147 @@
+{
+  "triggers": [
+    {
+      "id": "thermostat_override_changed",
+      "title": {
+        "en": "The thermostat mode changed",
+        "fr": "Le mode du thermostat a changé",
+        "nl": "De thermostaatmodus is gewijzigd",
+        "de": "Der Thermostatmodus hat sich geändert"
+      },
+      "tokens": [
+        {
+          "name": "mode",
+          "type": "string",
+          "title": {
+            "en": "Mode",
+            "fr": "Mode",
+            "nl": "Modus",
+            "de": "Modus"
+          },
+          "example": {
+            "en": "Manual until midnight",
+            "fr": "Manuel jusqu’à minuit",
+            "nl": "Handmatig tot middernacht",
+            "de": "Manuell bis Mitternacht"
+          }
+        }
+      ]
+    }
+  ],
+  "conditions": [
+    {
+      "id": "thermostat_override_is",
+      "title": {
+        "en": "Thermostat mode !{{is|is not}}...",
+        "fr": "Le mode du thermostat !{{est|n’est pas}}...",
+        "nl": "Thermostaatmodus !{{is|is niet}}...",
+        "de": "Thermostatmodus !{{ist|ist nicht}}..."
+      },
+      "titleFormatted": {
+        "en": "Thermostat mode !{{is|is not}} [[mode]]",
+        "fr": "Le mode du thermostat !{{est|n’est pas}} [[mode]]",
+        "nl": "Thermostaatmodus !{{is|is niet}} [[mode]]",
+        "de": "Thermostatmodus !{{ist|ist nicht}} [[mode]]"
+      },
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "mode",
+          "title": {
+            "en": "Mode",
+            "fr": "Mode",
+            "nl": "Modus",
+            "de": "Modus"
+          },
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Schedule (automatic)",
+                "fr": "Programme (automatique)",
+                "nl": "Schema (automatisch)",
+                "de": "Zeitplan (automatisch)"
+              }
+            },
+            {
+              "id": "6",
+              "label": {
+                "en": "Manual until midnight",
+                "fr": "Manuel jusqu’à minuit",
+                "nl": "Handmatig tot middernacht",
+                "de": "Manuell bis Mitternacht"
+              }
+            },
+            {
+              "id": "7",
+              "label": {
+                "en": "Fully manual",
+                "fr": "Entièrement manuel",
+                "nl": "Volledig handmatig",
+                "de": "Vollständig manuell"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "id": "set_thermostat_override",
+      "title": {
+        "en": "Set the thermostat mode",
+        "fr": "Changer le mode du thermostat",
+        "nl": "Thermostaatmodus instellen",
+        "de": "Thermostatmodus einstellen"
+      },
+      "titleFormatted": {
+        "en": "Set the thermostat mode to [[mode]]",
+        "fr": "Passer le thermostat en [[mode]]",
+        "nl": "Thermostaatmodus instellen op [[mode]]",
+        "de": "Thermostatmodus auf [[mode]] setzen"
+      },
+      "args": [
+        {
+          "type": "dropdown",
+          "name": "mode",
+          "title": {
+            "en": "Mode",
+            "fr": "Mode",
+            "nl": "Modus",
+            "de": "Modus"
+          },
+          "values": [
+            {
+              "id": "0",
+              "label": {
+                "en": "Schedule (automatic)",
+                "fr": "Programme (automatique)",
+                "nl": "Schema (automatisch)",
+                "de": "Zeitplan (automatisch)"
+              }
+            },
+            {
+              "id": "6",
+              "label": {
+                "en": "Manual until midnight",
+                "fr": "Manuel jusqu’à minuit",
+                "nl": "Handmatig tot middernacht",
+                "de": "Manuell bis Mitternacht"
+              }
+            },
+            {
+              "id": "7",
+              "label": {
+                "en": "Fully manual",
+                "fr": "Entièrement manuel",
+                "nl": "Volledig handmatig",
+                "de": "Vollständig manuell"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

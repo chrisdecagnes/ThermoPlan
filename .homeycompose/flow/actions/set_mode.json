@@ -1,0 +1,82 @@
+{
+  "title": {
+    "en": "Set the mode",
+    "fr": "Changer le mode",
+    "nl": "Modus instellen",
+    "de": "Modus einstellen"
+  },
+  "titleFormatted": {
+    "en": "Set the mode to [[mode]]",
+    "fr": "Passer en mode [[mode]]",
+    "nl": "Modus instellen op [[mode]]",
+    "de": "Modus auf [[mode]] setzen"
+  },
+  "args": [
+    {
+      "type": "dropdown",
+      "name": "mode",
+      "title": {
+        "en": "Mode",
+        "fr": "Mode",
+        "nl": "Modus",
+        "de": "Modus"
+      },
+      "values": [
+        {
+          "id": "0",
+          "label": {
+            "en": "Automatic",
+            "fr": "Automatique",
+            "nl": "Automatisch",
+            "de": "Automatisch"
+          }
+        },
+        {
+          "id": "1",
+          "label": {
+            "en": "One day at home",
+            "fr": "Journée à la maison",
+            "nl": "Een dag thuis",
+            "de": "Ein Tag zu Hause"
+          }
+        },
+        {
+          "id": "2",
+          "label": {
+            "en": "One day away from home",
+            "fr": "Journée d’absence",
+            "nl": "Een dag van huis",
+            "de": "Ein Tag außer Haus"
+          }
+        },
+        {
+          "id": "3",
+          "label": {
+            "en": "Sleeping",
+            "fr": "Nuit",
+            "nl": "Nacht",
+            "de": "Nacht"
+          }
+        },
+        {
+          "id": "4",
+          "label": {
+            "en": "Holiday",
+            "fr": "Vacances",
+            "nl": "Vakantie",
+            "de": "Urlaub"
+          }
+        },
+        {
+          "id": "5",
+          "label": {
+            "en": "Out of season",
+            "fr": "Hors saison",
+            "nl": "Buiten seizoen",
+            "de": "Außerhalb der Saison"
+          }
+        }
+      ]
+    }
+  ]
+}
